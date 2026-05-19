@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>いざという時リスト</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
+.wrap{max-width:640px;margin:0 auto;}
+h1{font-size:18px;font-weight:500;margin-bottom:4px;}
+.intro{font-size:13px;color:#666;line-height:1.6;margin-bottom:1.5rem;padding-left:12px;border-left:3px solid #ccc;}
+.section{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px solid #f0f0f0;}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:6px;}
+.ba{background:#E1F5EE;color:#0F6E56;}
+.bb{background:#EEEDFE;color:#534AB7;}
+.bc{background:#FAEEDA;color:#854F0B;}
+.bd{background:#E6F1FB;color:#185FA5;}
+.stitle{font-size:15px;font-weight:500;}
+.snote{font-size:12px;color:#888;margin-bottom:.75rem;line-height:1.6;}
+.entry{border:1px solid #efefef;border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem;}
+.entry:last-child{margin-bottom:0;}
+.enum{font-size:11px;color:#bbb;margin-bottom:6px;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;}
+.row.full{grid-template-columns:1fr;}
+.field{display:flex;flex-direction:column;gap:3px;}
+.field label{font-size:11px;color:#999;}
+.field input{font-size:13px;font-family:sans-serif;background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:6px 8px;color:#1a1a1a;width:100%;}
+.field textarea{font-size:13px;font-family:sans-serif;background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:6px 8px;color:#1a1a1a;width:100%;min-height:44px;resize:vertical;line-height:1.5;}
+.add-btn{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:#999;background:transparent;border:1px dashed #ddd;border-radius:8px;padding:5px 12px;cursor:pointer;margin-top:.5rem;width:100%;}
+.note{font-size:12px;color:#888;line-height:1.7;margin-top:1rem;padding-top:1rem;border-top:1px solid #eee;}
+.pbtn{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:6px 14px;border-radius:8px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer;margin-top:1rem;}
+@media print{.add-btn,.pbtn{display:none;}body{background:#fff;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="margin-bottom:1.5rem;padding-left:12px;border-left:3px solid #ccc;">
+<h1>いざという時リスト</h1>
+<p style="font-size:13px;color:#666;margin-top:4px;line-height:1.6;">今すぐ全部埋めなくていいです。今わかる範囲だけで十分です。「何かあったとき、ここに電話すればいい」とわかるだけで、気持ちの余裕が変わります。</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><span class="badge ba">A</span><span class="stitle">まず相談に行くところ</span></div>
+<p class="snote">介護認定がなくても相談できます。何かあったときの最初の一歩になる場所です。</p>
+<div id="ga">
+<div class="entry"><div class="enum">相談先 1</div>
+<div class="row"><div class="field"><label>窓口・センター名</label><input type="text" placeholder="例：○○地域包括支援センター"></div><div class="field"><label>電話番号</label><input type="tel" placeholder="例：0120-000-000"></div></div>
+<div class="row full"><div class="field"><label>メモ・場所・受付時間など</label><textarea placeholder="例：平日9〜17時。自宅から徒歩10分。"></textarea></div></div></div>
+<div class="entry"><div class="enum">相談先 2</div>
+<div class="row"><div class="field"><label>窓口・センター名</label><input type="text" placeholder="例：市区町村の介護保険窓口"></div><div class="field"><label>電話番号</label><input type="tel" placeholder="例：03-0000-0000"></div></div>
+<div class="row full"><div class="field"><label>メモ</label><textarea placeholder="例：認定申請の窓口。市役所2階。"></textarea></div></div></div>
+</div>
+<button class="add-btn" onclick="add('ga','相談先')">＋ 追加する</button>
+</div>
+
+<div class="section">
+<div class="sec-head"><span class="badge bb">B</span><span class="stitle">介護保険のサービス（認定後）</span></div>
+<p class="snote">要介護・要支援の認定を受けてから利用できるサービスです。今は「名前だけ知っておく」で十分です。</p>
+<div id="gb">
+<div class="entry"><div class="enum">サービス 1</div>
+<div class="row"><div class="field"><label>サービス名・事業者名</label><input type="text" placeholder="例：○○訪問介護"></div><div class="field"><label>電話番号</label><input type="tel" placeholder="例：03-0000-0000"></div></div>
+<div class="row full"><div class="field"><label>メモ</label><textarea placeholder="例：週2回の訪問介護。ケアマネさんに紹介してもらう予定。"></textarea></div></div></div>
+</div>
+<button class="add-btn" onclick="add('gb','サービス')">＋ 追加する</button>
+</div>
+
+<div class="section">
+<div class="sec-head"><span class="badge bc">C</span><span class="stitle">自費で使える生活支援サービス</span></div>
+<p class="snote">認定がなくても今すぐ使えるサービスです。家事代行・配食・見守りなど。</p>
+<div id="gc">
+<div class="entry"><div class="enum">サービス 1</div>
+<div class="row"><div class="field"><label>サービス名・会社名</label><input type="text" placeholder="例：○○家事代行"></div><div class="field"><label>電話番号 / URL</label><input type="text" placeholder="例：0120-000-000"></div></div>
+<div class="row full"><div class="field"><label>内容・費用メモ</label><textarea placeholder="例：週1回2時間。掃除と買い出し。月1万円程度。"></textarea></div></div></div>
+</div>
+<button class="add-btn" onclick="add('gc','サービス')">＋ 追加する</button>
+</div>
+
+<div class="section">
+<div class="sec-head"><span class="badge bd">D</span><span class="stitle">家族・身近な人</span></div>
+<p class="snote">すぐに頼むかどうかではなく、「誰に何を相談できそうか」を整理しておく欄です。</p>
+<div id="gd">
+<div class="entry"><div class="enum">連絡先 1</div>
+<div class="row"><div class="field"><label>名前・関係</label><input type="text" placeholder="例：兄（東京在住）"></div><div class="field"><label>電話番号</label><input type="tel" placeholder="例：090-0000-0000"></div></div>
+<div class="row full"><div class="field"><label>お願いできそうなこと</label><textarea placeholder="例：緊急時の連絡先として。書類関係を一緒に確認してもらえそう。"></textarea></div></div></div>
+<div class="entry"><div class="enum">連絡先 2</div>
+<div class="row"><div class="field"><label>名前・関係</label><input type="text" placeholder="例：近所の友人"></div><div class="field"><label>電話番号</label><input type="tel" placeholder="例：090-0000-0000"></div></div>
+<div class="row full"><div class="field"><label>お願いできそうなこと</label><textarea placeholder="例：急なお願いで買い物を頼めるかもしれない。"></textarea></div></div></div>
+</div>
+<button class="add-btn" onclick="add('gd','連絡先')">＋ 追加する</button>
+</div>
+
+<p class="note">何も起きなければ、このリストは引き出しの奥で眠ったままでいい。でも何かあったとき、「あ、そういえばあそこに電話すればいいんだった」と思い出せる。それだけで、パニックの深さがぜんぜん違います。</p>
+<button class="pbtn" onclick="window.print()">印刷する</button>
+</div>
+
+<script>
+var c={ga:2,gb:1,gc:1,gd:2};
+function add(id,label){
+  c[id]++;
+  var el=document.createElement('div');
+  el.className='entry';
+  el.innerHTML='<div class="enum">'+label+' '+c[id]+'</div>'
+    +'<div class="row"><div class="field"><label>名前・窓口名</label><input type="text"></div>'
+    +'<div class="field"><label>電話番号</label><input type="tel"></div></div>'
+    +'<div class="row full"><div class="field"><label>メモ</label><textarea></textarea></div></div>';
+  document.getElementById(id).appendChild(el);
+}
+</script>
+</body>
+</html>
