@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自分の役割を決めるワークシート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
+.wrap{max-width:640px;margin:0 auto;}
+h1{font-size:18px;font-weight:500;margin-bottom:4px;}
+.intro{font-size:13px;color:#666;line-height:1.6;margin-bottom:1.5rem;padding-left:12px;border-left:3px solid #ccc;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem;}
+.kago{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;}
+.kago-head{display:flex;align-items:center;gap:8px;margin-bottom:.5rem;}
+.num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.n1{background:#E1F5EE;color:#0F6E56;}
+.n2{background:#EEEDFE;color:#534AB7;}
+.n3{background:#FAECE7;color:#993C1D;}
+.n4{background:#FAEEDA;color:#854F0B;}
+.ktitle{font-size:14px;font-weight:500;}
+.knote{font-size:11px;color:#999;line-height:1.5;margin-bottom:.75rem;}
+.items{min-height:80px;}
+.item{display:flex;align-items:flex-start;gap:6px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
+.item:last-child{border-bottom:none;}
+.del{background:none;border:none;color:#ccc;cursor:pointer;font-size:14px;padding:0 2px;flex-shrink:0;}
+.del:hover{color:#e24b4a;}
+.add-row{display:flex;gap:6px;margin-top:.5rem;}
+.add-row input{flex:1;font-size:13px;font-family:sans-serif;background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:5px 8px;color:#1a1a1a;}
+.add-row button{font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer;}
+hr{margin:1.5rem 0 1rem;border:none;border-top:1px solid #eee;}
+.free{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.free-title{font-size:14px;font-weight:500;margin-bottom:.25rem;}
+.free-note{font-size:12px;color:#888;margin-bottom:.75rem;line-height:1.6;}
+.free textarea{width:100%;min-height:72px;font-size:13px;font-family:sans-serif;background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:8px 10px;color:#1a1a1a;resize:vertical;line-height:1.6;}
+.note{font-size:12px;color:#888;line-height:1.7;margin-top:1rem;padding-top:1rem;border-top:1px solid #eee;}
+.pbtn{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:6px 14px;border-radius:8px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer;margin-top:1rem;}
+@media print{.add-row,.pbtn,.del{display:none;}body{background:#fff;}.items{min-height:60px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="margin-bottom:1.5rem;padding-left:12px;border-left:3px solid #ccc;">
+<h1>自分の役割を決めるワークシート</h1>
+<p style="font-size:13px;color:#666;margin-top:4px;line-height:1.6;">今やっていることを、4つのカゴに入れ直してみましょう。完璧に分類しなくていいです。「だいたいこのカゴかな」で十分です。</p>
+</div>
+
+<div class="grid">
+<div class="kago">
+<div class="kago-head"><div class="num n1">①</div><span class="ktitle">続ける</span></div>
+<p class="knote">自分がやる意味があること。自分にしかできないこと。</p>
+<div class="items" id="k1"></div>
+<div class="add-row"><input type="text" id="i1" placeholder="追加する..."><button onclick="add(1)">追加</button></div>
+</div>
+<div class="kago">
+<div class="kago-head"><div class="num n2">②</div><span class="ktitle">頻度を下げる</span></div>
+<p class="knote">やめるほどではないけど、今のペースでなくていいこと。</p>
+<div class="items" id="k2"></div>
+<div class="add-row"><input type="text" id="i2" placeholder="追加する..."><button onclick="add(2)">追加</button></div>
+</div>
+<div class="kago">
+<div class="kago-head"><div class="num n3">③</div><span class="ktitle">手放す・やめる</span></div>
+<p class="knote">なんとなく続けていること。本当はしんどいこと。</p>
+<div class="items" id="k3"></div>
+<div class="add-row"><input type="text" id="i3" placeholder="追加する..."><button onclick="add(3)">追加</button></div>
+</div>
+<div class="kago">
+<div class="kago-head"><div class="num n4">④</div><span class="ktitle">誰か・サービスへ</span></div>
+<p class="knote">一人でやらなくていいこと。頼める先を知っておくこと。</p>
+<div class="items" id="k4"></div>
+<div class="add-row"><input type="text" id="i4" placeholder="追加する..."><button onclick="add(4)">追加</button></div>
+</div>
+</div>
+
+<hr>
+
+<div class="free">
+<div class="free-title">自分が関わる意味があると思うこと</div>
+<p class="free-note">長く一緒にいるからこそ気づけること、自分にしかわからないこと。「①続ける」の根拠になります。</p>
+<div class="free"><textarea placeholder="例：体調のかすかな変化に気づくこと。診察室でのやりとりを判断すること。好きなものや苦手なものを把握していること。"></textarea></div>
+</div>
+
+<div class="free">
+<div class="free-title">今週だけ、やめてみること・減らしてみること</div>
+<p class="free-note">「ずっとこうする」と決めなくていいです。今週だけ試してみることを一つだけ書いてみてください。</p>
+<div class="free"><textarea placeholder="例：今週だけ、夕食は買ってきたものにする。今週だけ、掃除は週2回にする。"></textarea></div>
+</div>
+
+<div class="free">
+<div class="free-title">「ここから先は一人でなくていい」と思えること</div>
+<p class="free-note">誰かに渡せそうなこと、相談できそうなこと、サービスに頼めそうなことを書いておきましょう。</p>
+<div class="free"><textarea placeholder="例：買い出しはネットスーパーに渡す。何かあったときの最初の電話先を決めておく。"></textarea></div>
+</div>
+
+<p class="note">役割を決めることは、親を見捨てることじゃない。自分が続けられる形を整えることが、長く関わり続けるための現実的な方法です。</p>
+<button class="pbtn" onclick="window.print()">印刷する</button>
+</div>
+
+<script>
+function add(n){
+  var inp=document.getElementById('i'+n);
+  var val=inp.value.trim();
+  if(!val)return;
+  var el=document.createElement('div');
+  el.className='item';
+  el.innerHTML='<button class="del" onclick="this.parentNode.remove()">×</button><span>'+val.replace(/</g,'&lt;')+'</span>';
+  document.getElementById('k'+n).appendChild(el);
+  inp.value='';
+  inp.focus();
+}
+document.querySelectorAll('.add-row input').forEach(function(inp){
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){add(parseInt(inp.id.replace('i','')));}
+  });
+});
+</script>
+</body>
+</html>
