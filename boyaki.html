@@ -70,12 +70,12 @@ body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
 <script>
 var API_KEY='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';
 var mode='seiri';
-var history=[];
+var chatHistory=[];
 var thinking=false;
 
 var systemPrompts={
   seiri:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護（親がまだ介護認定を受けていないが、生活が回らなくなってきた状況）を経験している人の不安を、静かに一緒に整理するのが役割です。\n\n【姿勢】\n・専門家ではなく、同じ立場の当事者として静かに寄り添う\n・決めつけず「こういうやり方もありますよ」と示す\n・答えを急がない。まず気持ちを受け止める\n・説教しない。励ましすぎない\n・1回の返答は3〜4文程度。短く、温かく\n\n【会話の流れ】\nまず「今、一番気になっていることは何ですか？」と聞いてください。その後、相手の言葉を受け止めながら、少しずつ「何が不安なのか」を一緒に言葉にしていく。答えを出そうとしなくていい。',
-  boyaki:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護を経験している人が、誰にも言えなかった愚痴や気持ちを安心してこぼせる場所を作るのが役割です。\n\n【姿勢】\n・ただ、聞く。それだけでいい\n・共感はするが、解決しようとしない\n・「大変でしたね」より「それはしんどいですよね」の方が近い温度で\n・アドバイスは求められるまでしない\n・1回の返答は2〜3文程度。短く、静かに\n\n【会話の流れ】\nまず「ここでは全部話していいですよ。今日は何がありましたか？」と聞いてください。その後は、相手が話すことをただ受け止めていく。'
+  boyaki:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護を経験している人が、誰にも言えなかった愚痴や気持ちを安心してこぼせる場所を作るのが役割です。\n\n【姿勢】\n・ただ、聞く。それだけでいい\n・共感はするが、解決しようとしない\n・「大変でしたね」より「それはつらいですよね」の方が近い温度で\n・アドバイスは求められるまでしない\n・1回の返答は2〜3文程度。短く、静かに\n\n【会話の流れ】\nまず「ここでは全部話していいですよ。今日は何がありましたか？」と聞いてください。その後は、相手が話すことをただ受け止めていく。'
 };
 
 function setMode(m){
@@ -86,7 +86,7 @@ function setMode(m){
 }
 
 function reset(){
-  history=[];
+  chatHistory=[];
   document.getElementById('chat').innerHTML='';
   addAIMessage(mode==='seiri'
     ?'今日はどんなことが気になっていますか？一緒に少しずつ整理していきましょう。'
@@ -137,7 +137,7 @@ async function send(){
   if(!text)return;
   inp.value='';
   addUserMessage(text);
-  history.push({role:'user',content:text});
+  chatHistory.push({role:'user',content:text});
   thinking=true;
   document.getElementById('send-btn').disabled=true;
   showThinking();
@@ -154,12 +154,12 @@ async function send(){
         model:'claude-sonnet-4-20250514',
         max_tokens:1000,
         system:systemPrompts[mode],
-        messages:history
+        messages:chatHistory
       })
     });
     var data=await res.json();
     var reply=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'少し考えています。もう少し話してもらえますか？';
-    history.push({role:'assistant',content:reply});
+    chatHistory.push({role:'assistant',content:reply});
     hideThinking();
     addAIMessage(reply);
   }catch(e){
