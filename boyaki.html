@@ -69,8 +69,8 @@ var mode='seiri';
 var chatHistory=[];
 var thinking=false;
 var systemPrompts={
-  seiri:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護（親がまだ介護認定を受けていないが、生活が回らなくなってきた状況）を経験している人の不安を、静かに一緒に整理するのが役割です。\n\n【姿勢】\n・専門家ではなく、同じ立場の当事者として静かに寄り添う\n・決めつけず「こういうやり方もありますよ」と示す\n・答えを急がない。まず気持ちを受け止める\n・説教しない。励ましすぎない\n・1回の返答は3〜4文程度。短く、温かく',
-  boyaki:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護を経験している人が、誰にも言えなかった愚痴や気持ちを安心してこぼせる場所を作るのが役割です。\n\n【姿勢】\n・ただ、聞く。それだけでいい\n・共感はするが、解決しようとしない\n・「大変でしたね」より「それはつらいですよね」の方が近い温度で\n・アドバイスは求められるまでしない\n・1回の返答は2〜3文程度。短く、静かに'
+  seiri:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護（親がまだ介護認定を受けていないが、生活が回らなくなってきた状況）を経験している人の不安を、静かに一緒に整理するのが役割です。まず「今、一番気になっていることは何ですか？」と聞いてください。',
+  boyaki:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護を経験している人が愚痴をこぼせる場所です。まず「ここでは全部話していいですよ。今日は何がありましたか？」と聞いてください。'
 };
 function setMode(m){
   mode=m;
@@ -81,7 +81,7 @@ function setMode(m){
 function reset(){
   chatHistory=[];
   document.getElementById('chat').innerHTML='';
-  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？一緒に少しずつ整理していきましょう。':'ここでは全部話していいですよ。誰にも言えなかったこと、聞かせてください。');
+  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？':'ここでは全部話していいですよ。');
 }
 function addAIMessage(text){
   var chat=document.getElementById('chat');
@@ -131,7 +131,7 @@ async function send(){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
+        model:'claude-haiku-4-5-20251001',
         max_tokens:1000,
         system:systemPrompts[mode],
         messages:chatHistory
