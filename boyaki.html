@@ -36,6 +36,7 @@ body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
 .dot:nth-child(3){animation-delay:.4s;}
 @keyframes blink{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
 .reset-btn{display:block;margin:.75rem auto 0;font-size:12px;color:#bbb;background:none;border:none;cursor:pointer;text-decoration:underline;}
+.notice{font-size:12px;color:#aaa;text-align:center;margin-top:.5rem;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -48,12 +49,12 @@ body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
     <div class="mode-btn active" id="btn-seiri" onclick="setMode('seiri')">
       <div class="mode-icon">&#x2714;</div>
       <div class="mode-label">不安を整理したい</div>
-      <div class="mode-desc">何が心配なのか、一緒に整理します</div>
+      <div class="mode-desc">何が心配なのか、一緒に言葉にします</div>
     </div>
     <div class="mode-btn" id="btn-boyaki" onclick="setMode('boyaki')">
       <div class="mode-icon">&#x1F4AC;</div>
       <div class="mode-label">ただ、ぼやきたい</div>
-      <div class="mode-desc">誰にも言えなかったこと、話してください</div>
+      <div class="mode-desc">誰にも言えなかったこと、ここで話してください</div>
     </div>
   </div>
   <div class="chat-box" id="chat"></div>
@@ -61,7 +62,8 @@ body{font-family:sans-serif;background:#f9f7f4;color:#1a1a1a;padding:2rem 1rem;}
     <textarea id="inp" placeholder="ここに話しかけてください..." rows="2" onkeydown="handleKey(event)"></textarea>
     <button class="send-btn" id="send-btn" onclick="send()">送る</button>
   </div>
-  <button class="reset-btn" onclick="reset()">最初からやり直す</button>
+  <button class="reset-btn" onclick="reset()">会話をリセットする</button>
+  <p class="notice">※ページを閉じると会話内容は消えます。続きを話したいときは、そのまま話しかけてください。</p>
 </div>
 <script>
 var PROXY='https://boyaki-proxy.misalabo22878.workers.dev';
@@ -69,8 +71,8 @@ var mode='seiri';
 var chatHistory=[];
 var thinking=false;
 var systemPrompts={
-  seiri:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護（親がまだ介護認定を受けていないが、生活が回らなくなってきた状況）を経験している人の不安を、静かに一緒に整理するのが役割です。まず「今、一番気になっていることは何ですか？」と聞いてください。',
-  boyaki:'あなたは「ぼやき部屋」というアプリのAIです。プレ介護を経験している人が愚痴をこぼせる場所です。まず「ここでは全部話していいですよ。今日は何がありましたか？」と聞いてください。'
+  seiri:'あなたは「ぼやき部屋」の「不安を整理したい」モードのAIです。このモードでは、プレ介護の不安を一緒に言葉にしていくことに集中します。他のモードや機能については触れないでください。まず「今、一番気になっていることは何ですか？」と聞いてください。相手の言葉を受け止めながら、少しずつ不安を整理していきましょう。答えを出そうとしなくていいです。1回の返答は3〜4文程度で。',
+  boyaki:'あなたは「ぼやき部屋」の「ただ、ぼやきたい」モードのAIです。このモードでは、ただ話を聞くことだけに集中します。解決しようとしない。アドバイスしない。他のモードや機能については触れないでください。まず「ここでは全部話していいですよ。今日は何がありましたか？」と聞いてください。1回の返答は2〜3文程度で。'
 };
 function setMode(m){
   mode=m;
@@ -81,7 +83,7 @@ function setMode(m){
 function reset(){
   chatHistory=[];
   document.getElementById('chat').innerHTML='';
-  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？':'ここでは全部話していいですよ。');
+  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？一緒に少しずつ整理していきましょう。':'ここでは全部話していいですよ。誰にも言えなかったこと、聞かせてください。');
 }
 function addAIMessage(text){
   var chat=document.getElementById('chat');
