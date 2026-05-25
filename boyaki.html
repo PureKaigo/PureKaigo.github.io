@@ -83,7 +83,7 @@ function setMode(m){
 function reset(){
   chatHistory=[];
   document.getElementById('chat').innerHTML='';
-  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？一緒に少しずつ整理していきましょう。':'ここでは全部話していいですよ。誰にも言えなかったこと、聞かせてください。');
+  addAIMessage(mode==='seiri'?'今日はどんなことが気になっていますか？':'ここでは全部話していいですよ。誰にも言えなかったこと、聞かせてください。');
 }
 function addAIMessage(text){
   var chat=document.getElementById('chat');
